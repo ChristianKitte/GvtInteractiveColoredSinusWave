@@ -20,19 +20,10 @@ var currentAmplitude = document.getElementById("value-amplitude");
  */
 var currentResolution = document.getElementById("value-resolution");
 
-const firstColor = [
-    1.0,
-    0.0,
-    0.0,
-    1.0,
-];
+const RED = new Float32Array([1, 0, 0, 1]);
+const GREEN = new Float32Array([0, 1, 0, 1]);
+const BLUE = new Float32Array([0, 0, 1, 1]);
 
-const secondColor = [
-    0.0,
-    1.0,
-    0.0,
-    1.0,
-];
 //*************************************************************************
 // UI Handler
 //*************************************************************************
@@ -62,6 +53,12 @@ document.getElementById("amplitude").oninput = () => {
 document.getElementById("resolution").oninput = () => {
     resolution = parseFloat(document.getElementById("resolution").value);
     RefreshWave();
+}
+
+function setInfoText() {
+    currentDegree.innerText = "Aktueller Startwinkel: " + start_val.toString() + " °";
+    currentAmplitude.innerText = "Aktuelle Amplitude: " + y_scale.toString();
+    currentResolution.innerText = "Aktuelle Auflösung: " + resolution.toString();
 }
 
 /**

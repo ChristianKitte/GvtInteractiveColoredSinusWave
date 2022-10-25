@@ -9,7 +9,8 @@ const vertexShaderSource = `#version 300 es
     
     void main()
     {
-        vColor = aColor;
+        vColor = vec4(aColor);
+        //vColor=vec4(0,1,0,1);
         
         gl_Position=vec4(aPosition, 0.0, 365);
         gl_PointSize=1.0;       

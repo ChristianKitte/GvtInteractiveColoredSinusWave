@@ -14,18 +14,14 @@ function getVerticesPointsArray() {
 
     vertices = new Float32Array([]);
 
-    currentDegree.innerText = "Aktueller Startwinkel: " + start_val.toString() + " °";
-    currentAmplitude.innerText = "Aktuelle Amplitude: " + y_scale.toString();
-    currentResolution.innerText = "Aktuelle Auflösung: " + resolution.toString();
+    setInfoText();
 
-    for (let i = 0; i < 91; i++) {
-        let radians = curentStart_val * Math.PI / 180.0;
-        y_pos = Math.sin(radians) * y_scale;
+    //91
+    for (let i = 0; i < 360 * 2;) {
+        let y_pos = sinusFromDegree(i + start_val, y_scale);
+        let next_y_pos = sinusFromDegree(i + start_val + distance, y_scale);
 
-        let nextRadians = (curentStart_val + distance) * Math.PI / 180.0;
-        let nextY_pos = Math.sin(nextRadians) * y_scale;
-
-        if ((y_pos < nextY_pos && y_pos > 0) || (y_pos > nextY_pos && y_pos < 0)) {
+        if ((y_pos < next_y_pos && y_pos > 0) || (y_pos > next_y_pos && y_pos < 0)) {
             bridgeToRight = true;
         } else {
             bridgeToRight = false;
@@ -41,19 +37,18 @@ function getVerticesPointsArray() {
             // Punkt 1 des Dreiecks
             push(x_zeichenPos);
             push(0);
+            push(0, 1, 0, 1);
 
-            // Punkt 2 des Dreiecks wenn Bridge left
+            // Punkt 2 des Dreiecks wenn Bridge rigt
             push(x_zeichenPos + distance);
-            push(y_pos);
+            push(next_y_pos);
+            push(0, 1, 0, 1);
 
             // Punkt 3 des Dreiecks wenn Bridge right
             push(x_zeichenPos);
-            push(y_pos);
+            push(next_y_pos);
+            push(0, 1, 0, 1);
 
-            push(firstColor[0]);
-            push(firstColor[1]);
-            push(firstColor[2]);
-            push(firstColor[3]);
             //******************************
             // Zweites Dreieck
             //******************************
@@ -61,19 +56,18 @@ function getVerticesPointsArray() {
             // Punkt 1 des Dreiecks
             push(x_zeichenPos);
             push(0);
+            push(0, 0, 1, 1);
 
             // Punkt 2 des Dreiecks wenn Bridge left
             push(x_zeichenPos + distance);
             push(0);
+            push(0, 0, 1, 1);
 
             // Punkt 3 des Dreiecks wenn Bridge right
             push(x_zeichenPos + distance);
-            push(y_pos);
+            push(next_y_pos);
+            push(0, 0, 1, 1);
 
-            push(secondColor[0]);
-            push(secondColor[1]);
-            push(secondColor[2]);
-            push(secondColor[3]);
         } else {
             //******************************
             // Erstes Dreieck
@@ -82,19 +76,18 @@ function getVerticesPointsArray() {
             // Punkt 1 des Dreiecks
             push(x_zeichenPos);
             push(0);
+            push(0, 1, 0, 1);
 
             // Punkt 2 des Dreiecks wenn Bridge left
-            push(x_zeichenPos);
-            push(y_pos);
+            push(x_zeichenPos + distance);
+            push(next_y_pos);
+            push(0, 1, 0, 1);
 
             // Punkt 3 des Dreiecks, wenn Bridge left
-            push((x_zeichenPos) - distance);
-            push(y_pos);
+            push(x_zeichenPos);
+            push(next_y_pos);
+            push(0, 1, 0, 1);
 
-            push(firstColor[0]);
-            push(firstColor[1]);
-            push(firstColor[2]);
-            push(firstColor[3]);
             //******************************
             // Zweites Dreieck
             //******************************
@@ -102,31 +95,35 @@ function getVerticesPointsArray() {
             // Punkt 1 des Dreiecks
             push(x_zeichenPos);
             push(0);
+            push(0, 0, 1, 1);
 
             // Punkt 2 des Dreiecks wenn Bridge left
-            push((x_zeichenPos) - distance);
-            push(y_pos);
+            push(x_zeichenPos + distance);
+            push(0);
+            push(0, 0, 1, 1);
 
             // Punkt 3 des Dreiecks, wenn Bridge left
-            push((x_zeichenPos) - distance);
-            push(0);
+            push(x_zeichenPos + distance);
+            push(next_y_pos);
+            push(0, 0, 1, 1);
 
-            push(secondColor[0]);
-            push(secondColor[1]);
-            push(secondColor[2]);
-            push(secondColor[3]);
         }
 
-        curentStart_val = curentStart_val + distance; // legt den Grad für diee nächste Berechnung fest
+        //curentStart_val = curentStart_val + distance; // legt den Grad für diee nächste Berechnung fest
 
         // Wichtiger Sonderfall: Der Graph schneidet die Nulllinie. Für den hier verwendeten
         // Algorithmus darf in diesen Fall die Zeichenposition nicht verändert werden. In allen
         // anderen Fällen muss sie um den Wert von Distance erhöht werden.
-        if ((y_pos > 0.0 && nextY_pos < 0.0) || (y_pos < 0.0 && nextY_pos > 0.0) || y_pos === 0) {
+
+        if ((y_pos > 0.0 && next_y_pos < 0.0) || (y_pos < 0.0 && next_y_pos > 0.0) || y_pos === 0) {
             x_zeichenPos = x_zeichenPos;
         } else {
             x_zeichenPos = x_zeichenPos + distance;
         }
+
+        i = i + distance;
+
+        //console.log(x_zeichenPos);
     }
 
     return vertices;
@@ -152,12 +149,14 @@ function RefreshWave() {
     var aColor = gl.getAttribLocation(program, 'aColor');
     gl.enableVertexAttribArray(aColor);
 
+    //gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 2 * 4, 0);
     gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 6 * 4, 0);
     gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 6 * 4, 2 * 4);
 
     // Ausgabe mit drawArray
     gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.TRIANGLES, 0, 90);
+    // isolated Triangles...
+    gl.drawArrays(gl.TRIANGLES, 0, verticesPointsArray.length / 3 * 2);
 
 }
 

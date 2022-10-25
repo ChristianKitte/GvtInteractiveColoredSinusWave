@@ -13,3 +13,11 @@ vertices = new Float32Array([]);
 function push() {
     vertices = new Float32Array([...vertices, ...arguments]);
 }
+
+function sinusFromDegree(degree, y_scale) {
+    let radians = degree * Math.PI / 180.0;
+    let y_pos = Math.sin(radians) * y_scale;
+
+    return y_pos;
+}
+
