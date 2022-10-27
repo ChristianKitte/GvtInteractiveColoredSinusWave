@@ -20,6 +20,12 @@ var currentAmplitude = document.getElementById("value-amplitude");
  */
 var currentResolution = document.getElementById("value-resolution");
 
+/**
+ * Die Einstellung zur Anzeige der überlagerten Sinuswelle
+ * @type {boolean}
+ */
+var showSinusLine = document.getElementById("sinus_line").checked;
+
 const RED = new Float32Array([1, 0, 0, 1]);
 const GREEN = new Float32Array([0, 1, 0, 1]);
 const BLUE = new Float32Array([0, 0, 1, 1]);
@@ -52,6 +58,15 @@ document.getElementById("amplitude").oninput = () => {
  */
 document.getElementById("resolution").oninput = () => {
     resolution = parseFloat(document.getElementById("resolution").value);
+    RefreshWave();
+}
+
+/**
+ * Setzt den Wert für die Anzeige der überlagerten Sinuswelle und
+ *  * initiiert das Neuzeichnen
+ *  */
+document.getElementById("sinus_line").onchange = () => {
+    showSinusLine = document.getElementById("sinus_line").checked;
     RefreshWave();
 }
 

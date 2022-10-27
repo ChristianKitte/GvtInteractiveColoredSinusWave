@@ -2,7 +2,7 @@
  * Array, das die aktuellen Vertices hält
  * @type {Float32Array} Ein neues Float32 Array
  */
-vertices = new Float32Array([]);
+var TriangleVertices = new Float32Array([]);
 
 /**
  * Hilfsfunktion, um im Array vertices dynamisch einen neuen Wert
@@ -10,14 +10,40 @@ vertices = new Float32Array([]);
  *
  * https://stackoverflow.com/questions/24410418/push-on-float32array
  */
-function push() {
-    vertices = new Float32Array([...vertices, ...arguments]);
+function pushTriangle() {
+    TriangleVertices = new Float32Array([...TriangleVertices, ...arguments]);
 }
 
-function sinusFromDegree(degree, y_scale) {
-    let radians = degree * Math.PI / 180.0;
-    let y_pos = Math.sin(radians) * y_scale;
+/**
+ * Array, das die aktuellen Vertices für die Linie hält
+ * @type {Float32Array} Ein neues Float32 Array
+ */
+var LineVertices = new Float32Array([]);
 
-    return y_pos;
+/**
+ * Hilfsfunktion, um im Array LineVertices dynamisch einen neuen Wert
+ * hinzuzufügen
+ *
+ * https://stackoverflow.com/questions/24410418/push-on-float32array
+ */
+function pushLine() {
+    LineVertices = new Float32Array([...LineVertices, ...arguments]);
 }
+
+/**
+ * Array, das die aktuellen Vertices für die SinusLinie hält
+ * @type {Float32Array} Ein neues Float32 Array
+ */
+var WaveVertices = new Float32Array([]);
+
+/**
+ * Hilfsfunktion, um im Array WaveVertices dynamisch einen neuen Wert
+ * hinzuzufügen
+ *
+ * https://stackoverflow.com/questions/24410418/push-on-float32array
+ */
+function pushWave() {
+    WaveVertices = new Float32Array([...WaveVertices, ...arguments]);
+}
+
 

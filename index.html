@@ -19,21 +19,21 @@
         <h4>Im Rahmen der zweiten Einsendeaufgabe sollte eine 2D-Geometrie aus Dreiecken erzeugt und mittels WebGL
             dargestellt werden.</h4>
 
-        <p>Für meine Abgabe verwende ich als Basis meine vorherige Abgabe. Nach wie vor wird eine dynamisch änderbare
-            Sinuswelle fest über 90 berechnete Punkte ausgegeben. Mit den unten eingestellten Werten wird so
+        <p>Für meine Abgabe verwende ich als Basis meine vorherige Abgabe. Mit den unten eingestellten Werten wird so
             eine vollständige Sinusschwingung ausgegeben.
 
             Die Sinuswelle wird hierbei durch Säulen dargestellt, welche jeweils mit Hilfe zweier Dreiecke erzeugt
-            werden. Um dies zu verdeutlichen, werden die zwei Dreiecke jeder Säulen unterschiedlich eingefärbt.
+            werden. Um dies zu verdeutlichen, werden die zwei Dreiecke unterschiedlich eingefärbt.
         </p>
 
         <p>Die Sinuswelle kann anhand von drei Parametern verändert werden. Mit Startwinkel wird der erste Winkel
             festgelegt, mit Amplitude erfolgt eine Skalierung des Funktionswertes. Die Auflösung ändert die Breite
-            der verwendeten Balken und somit die Auflösung. Der Resetbutton stellt die anfänglichen Werte wieder her.
-            Der gesamte Code kann auf
+            der verwendeten Balken sowie die Schrittlänge bei der Berechnung und somit die Auflösung. Der Resetbutton
+            stellt die anfänglichen Werte wieder her. Der gesamte Code kann auf
             <a href="https://github.com/ChristianKitte/GvtInteractiveColoredSinusWave" target="_blank">
                 GitHub eingesehen werden.
             </a>
+            Mit Hilfe der Checkbox kann die Ausgabe mit ener rote Sinuskurve überlagert werden.
         </p>
     </div>
 
@@ -55,6 +55,8 @@
 
     <div id="buttonBar">
         <button id="reset" class="btn btn-primary">Reset</button>
+        <input type="checkbox" id="sinus_line" name="sinus_line" value="1" checked="checked">
+        <label for="sinus_line">mit Sinuslinie überlagern</label>
     </div>
 
     <canvas id="canvas" width="1000px"></canvas>
@@ -62,7 +64,7 @@
 
 <script src="script/extendedvertexarray.js"></script>
 <script src="script/shader.js"></script>
-<script src="script/webglkonfig.js"></script>
+<script src="script/webglconfig.js"></script>
 <script src="script/configure.js"></script>
 <script src="script/main.js" type="text/javascript"></script>
 
