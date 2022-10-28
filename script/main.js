@@ -75,8 +75,6 @@ function getVerticesPointsArray() {
      */
     fillLineArray();
 
-
-    //91
     /**
      * Füllt alle benötigten Array mit den Positionen und Farbwerten der Vertices.
      */
@@ -103,20 +101,11 @@ function getVerticesPointsArray() {
         /**
          * Bestimmen, ob das nächste Dreieck nach rechts oder links gezeichnet werden muss.
          */
-        if ((next_y_pos >= y_pos) && y_pos > 0 || (next_y_pos <= y_pos) && y_pos < 0) {
+        if ((next_y_pos >= y_pos) && y_pos >= 0 || (next_y_pos <= y_pos) && y_pos <= 0) {
             bridgeToRight = true;
         } else {
             bridgeToRight = false;
         }
-
-        /**
-         * Bestimmen, ob das nächste Dreieck nach rechts oder links gezeichnet werden muss.
-         */
-        /*if ((Winkelgrad >= 0 && Winkelgrad < 90) || (Winkelgrad >= 180 && Winkelgrad < 270)) {
-            bridgeToRight = true;
-        } else {
-            bridgeToRight = false;
-        }*/
 
         if (bridgeToRight) {
             //******************************
@@ -164,36 +153,36 @@ function getVerticesPointsArray() {
             // Punkt 1 des Dreiecks
             pushTriangle(x_pos);
             pushTriangle(0);
-            pushTriangle(0, 1, 0, 1);
+            pushTriangle(0, 0, 1, 1);
 
             // Punkt 2 des Dreiecks wenn Bridge left
             pushTriangle(x_pos + resolution);
-            pushTriangle(y_pos);
-            pushTriangle(0, 1, 0, 1);
+            pushTriangle(0);
+            pushTriangle(0, 0, 1, 1);
 
             // Punkt 3 des Dreiecks, wenn Bridge left
             pushTriangle(x_pos);
-            pushTriangle(y_pos);
-            pushTriangle(0, 1, 0, 1);
+            pushTriangle(next_y_pos);
+            pushTriangle(0, 0, 1, 1);
 
             //******************************
             // Zweites Dreieck
             //******************************
 
             // Punkt 1 des Dreiecks
-            pushTriangle(x_pos);
+            pushTriangle(x_pos + resolution);
             pushTriangle(0);
-            pushTriangle(0, 0, 1, 1);
+            pushTriangle(0, 1, 0, 1);
 
             // Punkt 2 des Dreiecks wenn Bridge left
             pushTriangle(x_pos + resolution);
-            pushTriangle(0);
-            pushTriangle(0, 0, 1, 1);
+            pushTriangle(next_y_pos);
+            pushTriangle(0, 1, 0, 1);
 
             // Punkt 3 des Dreiecks, wenn Bridge left
-            pushTriangle(x_pos + resolution);
-            pushTriangle(y_pos);
-            pushTriangle(0, 0, 1, 1);
+            pushTriangle(x_pos);
+            pushTriangle(next_y_pos);
+            pushTriangle(0, 1, 0, 1);
         }
 
         x_pos = x_pos + resolution;
