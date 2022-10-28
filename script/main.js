@@ -12,22 +12,15 @@ function sinusFromDegree(degree, y_scale) {
 }
 
 /**
- * Baut die Vertices Array für die Linie und Dreiecke auf Basis der Vorgabewerte
+ * Hilfsfunktion zum Anlegen des Vertex Array für die Null Linie
  */
-function getVerticesPointsArray() {
-    var distance = resolution; // legt über distance die Auflösung fest
-    var x_zeichenPos = 0 // legt die nächste Ausgabe fest (unabh. vom Startgrad)
-
-    var lastAmplitude = 0
-    var bridgeToRight = true;
-
-    curentStart_val = start_val;
-
-    TriangleVertices = new Float32Array([]);
+function fillLineArray() {
+    /**
+     * JavaScript Array für die Vertices der Null-Linie
+     * @type {Float32Array}
+     */
     LineVertices = new Float32Array([]);
-    WaveVertices = new Float32Array([]);
 
-    setInfoText();
     pushLine(-8);
     pushLine(0);
     pushLine(0, 0, 0, 1);
@@ -35,27 +28,95 @@ function getVerticesPointsArray() {
     pushLine(368);
     pushLine(0);
     pushLine(0, 0, 0, 1);
+}
+
+/**
+ * Baut die Vertices Array für die Linie und Dreiecke auf Basis der Vorgabewerte
+ */
+function getVerticesPointsArray() {
+    /**
+     * JavaScript Array für die Vertices der Dreiecke
+     * @type {Float32Array}
+     */
+    TriangleVertices = new Float32Array([]);
+    /**
+     * JavaScript Array für die Vertices der Sinuskurve
+     * @type {Float32Array}
+     */
+    WaveVertices = new Float32Array([]);
+
+    /**
+     * Die X Position für den Wert i
+     * @type {number}
+     */
+    var x_pos = 0;
+    /**
+     * Die Y Position für den Werte i
+     * @type {number}
+     */
+    var y_pos = 0;
+    /**
+     * Die Y Position für den Werte i + distance
+     * @type {number}
+     */
+    var next_y_pos = 0;
+    /**
+     * True, wenn das Dreieck nach rechts gezeichnet wird
+     * @type {boolean}
+     */
+    var bridgeToRight = true
+
+    /**
+     * Setzt den Infotext auf Basis der aktuellen Werte
+     */
+    setInfoText();
+    /**
+     * Füllt das JavaSycript Array mit den Vertices für die Null Linie
+     */
+    fillLineArray();
+
 
     //91
-    //360 * 2
-    for (let i = 0; i < 361;) {
-        let y_pos = sinusFromDegree(i + start_val, y_scale);
-        let next_y_pos = sinusFromDegree(i + start_val + distance, y_scale);
+    /**
+     * Füllt alle benötigten Array mit den Positionen und Farbwerten der Vertices.
+     */
+    for (let Winkelgrad = 0; Winkelgrad < 361;) {
+        /**
+         * Winkelgrad + Startwert (Offset)
+         * @type {number} Winkelgrad zum Rechnen
+         */
+        let realWinkelgrad = Winkelgrad + Winkelgrad_startValue;
 
-        if ((y_pos < next_y_pos && y_pos > 0) || (y_pos > next_y_pos && y_pos < 0)) {
+        y_pos = sinusFromDegree(realWinkelgrad, y_scale);
+        next_y_pos = sinusFromDegree(realWinkelgrad + resolution, y_scale);
+
+        /**
+         * Punkte und Farbe der nächsten Punkte der Sinuswelle ausgeben
+         */
+        pushWave(Winkelgrad);
+        pushWave(y_pos);
+        pushWave(1.0, 0.0, 0.0, 1);
+        pushWave(Winkelgrad + resolution);
+        pushWave(next_y_pos);
+        pushWave(1.0, 0.0, 0.0, 1);
+
+        /**
+         * Bestimmen, ob das nächste Dreieck nach rechts oder links gezeichnet werden muss.
+         */
+        if ((next_y_pos >= y_pos) && y_pos > 0 || (next_y_pos <= y_pos) && y_pos < 0) {
             bridgeToRight = true;
         } else {
             bridgeToRight = false;
         }
 
-        lastAmplitude = y_pos;
-
-        pushWave(i);
-        pushWave(y_pos);
-        pushWave(1.0, 0.0, 0.0, 1);
-        pushWave(i + distance);
-        pushWave(next_y_pos);
-        pushWave(1.0, 0.0, 0.0, 1);
+        /**
+         * Bestimmen, ob das nächste Dreieck nach rechts oder links gezeichnet werden muss.
+         */
+        /*if ((Winkelgrad >= 0 && Winkelgrad < 90) || (Winkelgrad >= 180 && Winkelgrad < 270)) {
+            bridgeToRight = true;
+        } else {
+            bridgeToRight = false;
+        }*/
 
         if (bridgeToRight) {
             //******************************
@@ -63,18 +124,18 @@ function getVerticesPointsArray() {
             //******************************
 
             // Punkt 1 des Dreiecks
-            pushTriangle(x_zeichenPos);
+            pushTriangle(x_pos);
             pushTriangle(0);
             pushTriangle(0, 1, 0, 1);
 
             // Punkt 2 des Dreiecks wenn Bridge right
-            pushTriangle(x_zeichenPos + distance);
-            pushTriangle(next_y_pos);
+            pushTriangle(x_pos + resolution);
+            pushTriangle(y_pos);
             pushTriangle(0, 1, 0, 1);
 
             // Punkt 3 des Dreiecks wenn Bridge right
-            pushTriangle(x_zeichenPos);
-            pushTriangle(next_y_pos);
+            pushTriangle(x_pos);
+            pushTriangle(y_pos);
             pushTriangle(0, 1, 0, 1);
 
             //******************************
@@ -82,18 +143,18 @@ function getVerticesPointsArray() {
             //******************************
 
             // Punkt 1 des Dreiecks
-            pushTriangle(x_zeichenPos);
+            pushTriangle(x_pos);
             pushTriangle(0);
             pushTriangle(0, 0, 1, 1);
 
             // Punkt 2 des Dreiecks wenn Bridge left
-            pushTriangle(x_zeichenPos + distance);
+            pushTriangle(x_pos + resolution);
             pushTriangle(0);
             pushTriangle(0, 0, 1, 1);
 
             // Punkt 3 des Dreiecks wenn Bridge right
-            pushTriangle(x_zeichenPos + distance);
-            pushTriangle(next_y_pos);
+            pushTriangle(x_pos + resolution);
+            pushTriangle(y_pos);
             pushTriangle(0, 0, 1, 1);
         } else {
             //******************************
@@ -101,18 +162,18 @@ function getVerticesPointsArray() {
             //******************************
 
             // Punkt 1 des Dreiecks
-            pushTriangle(x_zeichenPos);
+            pushTriangle(x_pos);
             pushTriangle(0);
             pushTriangle(0, 1, 0, 1);
 
             // Punkt 2 des Dreiecks wenn Bridge left
-            pushTriangle(x_zeichenPos - distance);
-            pushTriangle(next_y_pos);
+            pushTriangle(x_pos + resolution);
+            pushTriangle(y_pos);
             pushTriangle(0, 1, 0, 1);
 
             // Punkt 3 des Dreiecks, wenn Bridge left
-            pushTriangle(x_zeichenPos);
-            pushTriangle(next_y_pos);
+            pushTriangle(x_pos);
+            pushTriangle(y_pos);
             pushTriangle(0, 1, 0, 1);
 
             //******************************
@@ -120,34 +181,23 @@ function getVerticesPointsArray() {
             //******************************
 
             // Punkt 1 des Dreiecks
-            pushTriangle(x_zeichenPos);
+            pushTriangle(x_pos);
             pushTriangle(0);
             pushTriangle(0, 0, 1, 1);
 
             // Punkt 2 des Dreiecks wenn Bridge left
-            pushTriangle(x_zeichenPos - distance);
+            pushTriangle(x_pos + resolution);
             pushTriangle(0);
             pushTriangle(0, 0, 1, 1);
 
             // Punkt 3 des Dreiecks, wenn Bridge left
-            pushTriangle(x_zeichenPos - distance);
-            pushTriangle(next_y_pos);
+            pushTriangle(x_pos + resolution);
+            pushTriangle(y_pos);
             pushTriangle(0, 0, 1, 1);
         }
 
-        // Wichtiger Sonderfall: Der Graph schneidet die Nulllinie. Für den hier verwendeten
-        // Algorithmus darf in diesen Fall die Zeichenposition nicht verändert werden. In allen
-        // anderen Fällen muss sie um den Wert von Distance erhöht werden.
-
-        if ((y_pos > 0.0 && next_y_pos < 0.0) || (y_pos < 0.0 && next_y_pos > 0.0) || y_pos === 0) {
-            //x_zeichenPos = x_zeichenPos;
-        } else {
-            //x_zeichenPos = x_zeichenPos + distance;
-        }
-
-        // nächste Position einstellen
-        x_zeichenPos = x_zeichenPos + distance;
-        i = i + distance;
+        x_pos = x_pos + resolution;
+        Winkelgrad = Winkelgrad + resolution;
     }
 }
 
@@ -185,8 +235,8 @@ function RefreshWave() {
     gl.bufferData(gl.ARRAY_BUFFER, LineVertices, gl.STATIC_DRAW);
     gl.drawArrays(gl.LINES, 0, LineVertices.length / 6);
 
+    // optional Ausgabe Sinuskurve...
     if (showSinusLine) {
-        // Ausgabe Nullinie...
         gl.bufferData(gl.ARRAY_BUFFER, WaveVertices, gl.STATIC_DRAW);
         gl.drawArrays(gl.LINES, 0, WaveVertices.length / 6);
     }

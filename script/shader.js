@@ -1,9 +1,11 @@
+/**
+ * Der Code des Vertex Shader der über jeden Punkt ausgeführt wird
+ * @type {string}
+ */
 const vertexShaderSource = `#version 300 es  
     
     in vec2 aPosition;
     in vec4 aColor;
-    
-    //in float aSize;
     
     out vec4 vColor;
     
@@ -17,6 +19,10 @@ const vertexShaderSource = `#version 300 es
     }
 `;
 
+/**
+ * Der Code des Fragment Shader, der über jeden Pixel des Fragments ausgeführt wird.
+ * @type {string} Der Code
+ */
 const fragmentShaderSouce = `#version 300 es
     
     precision mediump float;

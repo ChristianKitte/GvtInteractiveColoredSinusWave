@@ -26,10 +26,6 @@ var currentResolution = document.getElementById("value-resolution");
  */
 var showSinusLine = document.getElementById("sinus_line").checked;
 
-const RED = new Float32Array([1, 0, 0, 1]);
-const GREEN = new Float32Array([0, 1, 0, 1]);
-const BLUE = new Float32Array([0, 0, 1, 1]);
-
 //*************************************************************************
 // UI Handler
 //*************************************************************************
@@ -39,7 +35,7 @@ const BLUE = new Float32Array([0, 0, 1, 1]);
  * initiiert das Neuzeichnen
  */
 document.getElementById("degree").oninput = () => {
-    start_val = parseFloat(document.getElementById("degree").value);
+    Winkelgrad_startValue = parseFloat(document.getElementById("degree").value);
     RefreshWave();
 }
 
@@ -70,8 +66,11 @@ document.getElementById("sinus_line").onchange = () => {
     RefreshWave();
 }
 
+/***
+ * Setzt den angezeigten Text anhand der aktuellen Werte
+ */
 function setInfoText() {
-    currentDegree.innerText = "Aktueller Startwinkel: " + start_val.toString() + " °";
+    currentDegree.innerText = "Aktueller Startwinkel: " + Winkelgrad_startValue.toString() + " °";
     currentAmplitude.innerText = "Aktuelle Amplitude: " + y_scale.toString();
     currentResolution.innerText = "Aktuelle Auflösung: " + resolution.toString();
 }
@@ -85,7 +84,7 @@ document.getElementById("reset").onclick = () => {
     document.getElementById("amplitude").value = 100;
     document.getElementById("resolution").value = 4;
 
-    start_val = parseFloat(document.getElementById("degree").value);
+    Winkelgrad_startValue = parseFloat(document.getElementById("degree").value);
     y_scale = parseFloat(document.getElementById("amplitude").value);
     resolution = parseFloat(document.getElementById("resolution").value);
 
@@ -100,14 +99,7 @@ document.getElementById("reset").onclick = () => {
  * Hält den anfänglichen Startwert der Sinuskurve beim Start
  * @type {number} Der Startwert
  */
-var start_val = 0.0; // ==> StartWert
-
-/**
- * Hält den aktuellen Startwert, de im Verlauf der Ausgabe immer weiter
- * anwächst.
- * @type {number} Der aktuelle Startwert
- */
-var curentStart_val = 0.0; // ==> StartWert
+var Winkelgrad_startValue = 0.0; // ==> StartWert
 
 /**
  * Hält den aktuellen Wert zur Skalierung der Amplitude
@@ -116,7 +108,7 @@ var curentStart_val = 0.0; // ==> StartWert
 var y_scale = 100; // ==> Amplitude
 
 /**
- * Hält die aktuelle Auflösung (Wird durch Distanz bestimmt)
+ * Hält die aktuelle Auflösung (entspricht der Schrittweite bei der Berechnung)
  * @type {number} Die Auflösung
  */
 var resolution = 4; // ==> Amplitude
