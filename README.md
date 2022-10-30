@@ -38,7 +38,7 @@ Die Nulllinie wird durch einen schwarzen Strich angezeigt. Seine Punkte und Farb
 gehalten, was dynamisch nach dem Zeichnen der ersten Ausgabe (Dreiecke) an das interne WebGL Vertexbuffer angehangen
 wird. Eine erneute Ausgabe der Punkte fügt die Linie der Ausgabe hinzu.
 
-Analog zur Mittellinie wird auch die Checkbox in einem eigenen Array definiert. Der Wert der Checkbox steuert, ob auch
+Analog zur Mittellinie wird auch die Sinuswelle in einem eigenen Array definiert. Der Wert der Checkbox steuert, ob auch
 diese Werte zur Ausgabe kommen.
 
 Als Startseite dient wie üblich eine**index.html**. Die Datei**main.css**enthält alle benötigten Klassen, um die Grafik
