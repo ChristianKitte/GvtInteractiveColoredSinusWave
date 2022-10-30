@@ -41,8 +41,8 @@ wird. Eine erneute Ausgabe der Punkte fügt die Linie der Ausgabe hinzu.
 Analog zur Mittellinie wird auch die Sinuswelle in einem eigenen Array definiert. Der Wert der Checkbox steuert, ob auch
 diese Werte zur Ausgabe kommen.
 
-Als Startseite dient wie üblich eine**index.html**. Die Datei**main.css**enthält alle benötigten Klassen, um die Grafik
-einfach einzubinden. In der Datei**layout.css**wird das Layout der Webseite selbst festgelegt. Daneben kommt Bootstrap
+Als Startseite dient wie üblich eine **index.html**. Die Datei **main.css** enthält alle benötigten Klassen, um die Grafik
+einfach einzubinden. In der Datei **layout.css** wird das Layout der Webseite selbst festgelegt. Daneben kommt Bootstrap
 für die Buttons zum Einsatz.
 
 Die Logik verteilt sich auf mehrere JavaScript Dateien, welche von **main.js** genutzt werden. WebGL selbst und der
