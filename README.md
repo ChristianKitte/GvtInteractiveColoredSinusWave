@@ -29,7 +29,7 @@ Die Sinuswelle kann anhand von drei Parametern verändert werden. Mit Startwinke
 Amplitude erfolgt eine Skalierung des Funktionswertes. Die Auflösung ändert die Breite der verwendeten Balken und somit
 die Auflösung.
 
-Der Reset Button stellt die anfänglichen Werte wieder her. Mit Hilfe der Scheckbox kann eine rote Sinuskurve über die
+Der Reset Button stellt die anfänglichen Werte wieder her. Mit Hilfe der Checkbox kann eine rote Sinuskurve über die
 Ausgabe gelegt werden.
 
 ![](assets/2022-10-27-14-05-27-image.png)
