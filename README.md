@@ -17,7 +17,7 @@ Informatics**
 
 [zur Webseite](https://gvt.ckitte.de/ea3/)
 
-Im Rahmen der zweiten Einsendeaufgabe soll eine 2D-Geometrie aus Dreiecken erzeugt und mittels WebGL dargestellt werden.
+Im Rahmen der dritten Einsendeaufgabe soll eine 2D-Geometrie aus Dreiecken erzeugt und mittels WebGL dargestellt werden.
 
 Für meine Abgabe stelle ich eine Sinuswelle dar. Die Welle wird hierbei durch Säulen dargestellt,
 welche jeweils mit Hilfe zweier Dreiecke erzeugt werden. Um dies zu verdeutlichen, werden die zwei
