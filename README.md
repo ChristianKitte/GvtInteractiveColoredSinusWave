@@ -13,7 +13,7 @@ Informatics**
 
 ---
 
-### Einsendeaufgabe EA3 : 2D-Geometrie aus farbigen Dreiecken.
+### Einsendeaufgabe EA3 : 2D-Geometrie aus farbigen Dreiecken
 
 [zur Webseite](https://gvt.ckitte.de/ea3/)
 
